@@ -1,0 +1,131 @@
+# ============================================================
+# CockroachDB Cluster: 3 nodos con latencia simulada (tc/netem)
+# Proyecto 2 - SI3009 BDD Avanzadas
+# ============================================================
+
+networks:
+  crdbnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.21.0.0/24
+
+volumes:
+  crdb1_data:
+  crdb2_data:
+  crdb3_data:
+
+services:
+
+  # ──────────────────────────────────────────────
+  # NODO 1 — Inicia el cluster
+  # ──────────────────────────────────────────────
+  crdb-node1:
+    image: cockroachdb/cockroach:v23.2.0
+    container_name: crdb-node1
+    hostname: crdb-node1
+    networks:
+      crdbnet:
+        ipv4_address: 172.21.0.10
+    ports:
+      - "26257:26257"   # SQL/pgwire
+      - "8080:8080"     # Admin UI
+    volumes:
+      - crdb1_data:/cockroach/cockroach-data
+    command: >
+      start
+        --insecure
+        --advertise-addr=crdb-node1:26257
+        --http-addr=0.0.0.0:8080
+        --join=crdb-node1:26257,crdb-node2:26257,crdb-node3:26257
+        --cache=256MiB
+        --max-sql-memory=256MiB
+    healthcheck:
+      test: ["CMD", "bash", "-c", "cat /dev/null > /dev/tcp/localhost/26257"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+  # ──────────────────────────────────────────────
+  # NODO 2
+  # ──────────────────────────────────────────────
+  crdb-node2:
+    image: cockroachdb/cockroach:v23.2.0
+    container_name: crdb-node2
+    hostname: crdb-node2
+    networks:
+      crdbnet:
+        ipv4_address: 172.21.0.11
+    ports:
+      - "26258:26257"
+      - "8081:8080"
+    volumes:
+      - crdb2_data:/cockroach/cockroach-data
+    command: >
+      start
+        --insecure
+        --advertise-addr=crdb-node2:26257
+        --http-addr=0.0.0.0:8080
+        --join=crdb-node1:26257,crdb-node2:26257,crdb-node3:26257
+        --cache=256MiB
+        --max-sql-memory=256MiB
+    depends_on:
+      crdb-node1:
+        condition: service_started
+
+  # ──────────────────────────────────────────────
+  # NODO 3
+  # ──────────────────────────────────────────────
+  crdb-node3:
+    image: cockroachdb/cockroach:v23.2.0
+    container_name: crdb-node3
+    hostname: crdb-node3
+    networks:
+      crdbnet:
+        ipv4_address: 172.21.0.12
+    ports:
+      - "26259:26257"
+      - "8082:8080"
+    volumes:
+      - crdb3_data:/cockroach/cockroach-data
+    command: >
+      start
+        --insecure
+        --advertise-addr=crdb-node3:26257
+        --http-addr=0.0.0.0:8080
+        --join=crdb-node1:26257,crdb-node2:26257,crdb-node3:26257
+        --cache=256MiB
+        --max-sql-memory=256MiB
+    depends_on:
+      crdb-node1:
+        condition: service_started
+
+  # ──────────────────────────────────────────────
+  # INIT JOB — inicializa el cluster una sola vez
+  # Espera a que node1 pase el healthcheck antes de correr
+  # ──────────────────────────────────────────────
+  crdb-init:
+    image: cockroachdb/cockroach:v23.2.0
+    container_name: crdb-init
+    networks:
+      - crdbnet
+    depends_on:
+      crdb-node1:
+        condition: service_healthy
+    command: >
+      bash -c "
+        echo 'Inicializando cluster...';
+        cockroach init --insecure --host=crdb-node1:26257 || echo 'Cluster ya inicializado, continuando...';
+        echo 'Esperando 5s para que el cluster estabilice...';
+        sleep 5;
+        echo 'Creando base de datos y usuario...';
+        cockroach sql --insecure --host=crdb-node1:26257 -e \"
+          CREATE DATABASE IF NOT EXISTS banco_db;
+          CREATE USER IF NOT EXISTS banco_admin;
+          GRANT ALL ON DATABASE banco_db TO banco_admin;
+          GRANT admin TO banco_admin;
+        \";
+        echo 'Setup completado.';
+      "
+    restart: "no"

@@ -1,0 +1,101 @@
+# ============================================================
+# PostgreSQL Cluster: 1 Primary + 2 Replicas (streaming WAL)
+# Proyecto 2 - SI3009 BDD Avanzadas - Dominio: Banca
+# FIX: gosu en lugar de su-exec (disponible en imagen postgres:16)
+# ============================================================
+
+networks:
+  pgnet:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24
+
+volumes:
+  pg_primary_data:
+  pg_replica1_data:
+  pg_replica2_data:
+
+services:
+
+  pg-primary:
+    image: postgres:16
+    container_name: pg-primary
+    hostname: pg-primary
+    networks:
+      pgnet:
+        ipv4_address: 172.20.0.10
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: banco_admin
+      POSTGRES_PASSWORD: banco_pass
+      POSTGRES_DB: banco_db
+    volumes:
+      - pg_primary_data:/var/lib/postgresql/data
+      - ./postgres-primary.conf:/etc/postgresql/postgresql.conf:ro
+      - ./pg_hba.conf:/etc/postgresql/pg_hba.conf:ro
+      - ./init:/docker-entrypoint-initdb.d:ro
+    command: >
+      postgres
+        -c config_file=/etc/postgresql/postgresql.conf
+        -c hba_file=/etc/postgresql/pg_hba.conf
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U banco_admin -d banco_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pg-replica1:
+    image: postgres:16
+    container_name: pg-replica1
+    hostname: pg-replica1
+    networks:
+      pgnet:
+        ipv4_address: 172.20.0.11
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_replica1_data:/var/lib/postgresql/data
+      - ./postgres-replica.conf:/etc/postgresql/postgresql.conf:ro
+    depends_on:
+      pg-primary:
+        condition: service_healthy
+    command: ["bash", "-c", "rm -rf /var/lib/postgresql/data/* && PGPASSWORD=repl_pass pg_basebackup -h pg-primary -U replicator -p 5432 -D /var/lib/postgresql/data -Fp -Xs -P -R --checkpoint=fast && chown -R postgres:postgres /var/lib/postgresql/data && chmod 700 /var/lib/postgresql/data && echo 'Basebackup OK. Iniciando postgres...' && gosu postgres postgres -c config_file=/etc/postgresql/postgresql.conf"]
+
+  pg-replica2:
+    image: postgres:16
+    container_name: pg-replica2
+    hostname: pg-replica2
+    networks:
+      pgnet:
+        ipv4_address: 172.20.0.12
+    ports:
+      - "5434:5432"
+    volumes:
+      - pg_replica2_data:/var/lib/postgresql/data
+      - ./postgres-replica.conf:/etc/postgresql/postgresql.conf:ro
+    depends_on:
+      pg-primary:
+        condition: service_healthy
+    command: ["bash", "-c", "rm -rf /var/lib/postgresql/data/* && PGPASSWORD=repl_pass pg_basebackup -h pg-primary -U replicator -p 5432 -D /var/lib/postgresql/data -Fp -Xs -P -R --checkpoint=fast && chown -R postgres:postgres /var/lib/postgresql/data && chmod 700 /var/lib/postgresql/data && echo 'Basebackup OK. Iniciando postgres...' && gosu postgres postgres -c config_file=/etc/postgresql/postgresql.conf"]
+
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: pgbouncer
+    networks:
+      pgnet:
+        ipv4_address: 172.20.0.20
+    ports:
+      - "6432:6432"
+    environment:
+      DB_HOST: pg-primary
+      DB_PORT: 5432
+      DB_USER: banco_admin
+      DB_PASSWORD: banco_pass
+      DB_NAME: banco_db
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 100
+      DEFAULT_POOL_SIZE: 20
+    depends_on:
+      - pg-primary

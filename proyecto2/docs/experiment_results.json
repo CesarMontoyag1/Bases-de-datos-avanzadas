@@ -1,0 +1,117 @@
+{
+  "timestamp": "2026-04-13T02:10:06.306568",
+  "latency": {
+    "pg_primary_write": {
+      "n": 200,
+      "errors": 0,
+      "mean_ms": 1.97,
+      "median_ms": 1.9,
+      "p95_ms": 2.59,
+      "p99_ms": 4.59,
+      "min_ms": 1.38,
+      "max_ms": 5.37,
+      "stdev_ms": 0.44
+    },
+    "pg_replica1_read": {
+      "n": 200,
+      "errors": 0,
+      "mean_ms": 4.41,
+      "median_ms": 4.37,
+      "p95_ms": 4.65,
+      "p99_ms": 4.91,
+      "min_ms": 4.11,
+      "max_ms": 8.81,
+      "stdev_ms": 0.35
+    },
+    "pg_replica2_read": {
+      "n": 200,
+      "errors": 0,
+      "mean_ms": 4.54,
+      "median_ms": 4.38,
+      "p95_ms": 5.14,
+      "p99_ms": 8.86,
+      "min_ms": 4.12,
+      "max_ms": 16.56,
+      "stdev_ms": 0.96
+    },
+    "pg_primary_read": {
+      "n": 200,
+      "errors": 0,
+      "mean_ms": 4.23,
+      "median_ms": 4.12,
+      "p95_ms": 4.71,
+      "p99_ms": 8.16,
+      "min_ms": 3.93,
+      "max_ms": 9.25,
+      "stdev_ms": 0.51
+    }
+  },
+  "replication": {
+    "pg_sync_off": {
+      "n": 100,
+      "errors": 0,
+      "mean_ms": 0.91,
+      "median_ms": 0.86,
+      "p95_ms": 1.32,
+      "p99_ms": 1.93,
+      "min_ms": 0.71,
+      "max_ms": 1.93,
+      "stdev_ms": 0.2
+    },
+    "pg_sync_local": {
+      "n": 100,
+      "errors": 0,
+      "mean_ms": 2.27,
+      "median_ms": 2.22,
+      "p95_ms": 2.97,
+      "p99_ms": 4.66,
+      "min_ms": 1.75,
+      "max_ms": 4.66,
+      "stdev_ms": 0.39
+    },
+    "pg_sync_remote_write": {
+      "n": 100,
+      "errors": 0,
+      "mean_ms": 2.27,
+      "median_ms": 2.22,
+      "p95_ms": 3.13,
+      "p99_ms": 4.15,
+      "min_ms": 1.71,
+      "max_ms": 4.15,
+      "stdev_ms": 0.39
+    },
+    "pg_sync_remote_apply": {
+      "n": 100,
+      "errors": 0,
+      "mean_ms": 2.32,
+      "median_ms": 2.23,
+      "p95_ms": 3.05,
+      "p99_ms": 4.19,
+      "min_ms": 1.65,
+      "max_ms": 4.19,
+      "stdev_ms": 0.42
+    }
+  },
+  "lag": {
+    "pg_replication_status": [
+      {
+        "client": "172.20.0.12",
+        "sync_state": "async",
+        "lag_size": "0 bytes",
+        "lag_time": "0:00:00.001673"
+      },
+      {
+        "client": "172.20.0.11",
+        "sync_state": "async",
+        "lag_size": "0 bytes",
+        "lag_time": "0:00:00.001042"
+      }
+    ]
+  },
+  "distributed_join": {
+    "postgres": {
+      "elapsed_ms": 81.5,
+      "plan": "Limit  (cost=953.30..953.32 rows=10 width=77) (actual time=76.190..76.236 rows=10 loops=1)\n  Buffers: shared hit=286\n  ->  Sort  (cost=953.30..965.80 rows=5002 width=77) (actual time=76.186..76.218 rows=10 loops=1)\n        Sort Key: (sum(t.monto)) DESC\n        Sort Method: top-N heapsort  Memory: 27kB\n        Buffers: shared hit=286\n        ->  HashAggregate  (cost=782.68..845.21 rows=5002 width=77) (actual time=68.740..72.914 rows=3431 loops=1)\n              Group Key: c.cliente_id\n              Batches: 1  Memory Usage: 1745kB\n              Buffers: shared hit=283\n              ->  Hash Join  (cost=458.27..732.81 rows=6650 width=61) (actual time=20.998..59.138 rows=6649 loops=1)\n                    Hash Cond: (cu.cliente_id = c.cliente_id)\n                    Buffers: shared hit=283\n                    ->  Hash Join  (cost=276.73..533.79 rows=6650 width=40) (actual time=12.506..39.554 rows=6649 loops=1)\n                          Hash Cond: (t.cuenta_origen = cu.cuenta_id)\n                          Buffers: shared hit=214\n                          ->  Append  (cost=0.00..239.60 rows=6650 width=40) (actual time=0.020..15.822 rows=6649 loops=1)\n                                Buffers: shared hit=106\n                                ->  Seq Scan on tx_log_2024_q1 t_1  (cost=0.00..101.19 rows=3278 width=40) (actual time=0.017..3.500 rows=3279 loops=1)\n                                      Filter: ((created_at >= '2024-01-01 00:00:00+00'::timestamp with time zone) AND (created_at <= '2024-06-30 00:00:00+00'::timestamp with time zone))\n                                      Buffers: shared hit=52\n                                ->  Seq Scan on tx_log_2024_q2 t_2  (cost=0.00..105.16 rows=3372 width=40) (actual time=0.015..3.345 rows=3370 loops=1)\n                                      Filter: ((created_at >= '2024-01-01 00:00:00+00'::timestamp with time zone) AND (created_at <= '2024-06-30 00:00:00+00'::timestamp with time zone))\n                                      Rows Removed by Filter: 41\n                                      Buffers: shared hit=54\n                          ->  Hash  (cost=182.99..182.99 rows=7499 width=32) (actual time=12.393..12.396 rows=7499 loops=1)\n                                Buckets: 8192  Batches: 1  Memory Usage: 533kB\n                                Buffers: shared hit=108\n                                ->  Seq Scan on cuentas cu  (cost=0.00..182.99 rows=7499 width=32) (actual time=0.007..5.997 rows=7499 loops=1)\n                                      Buffers: shared hit=108\n                    ->  Hash  (cost=119.02..119.02 rows=5002 width=37) (actual time=8.430..8.433 rows=5002 loops=1)\n                          Buckets: 8192  Batches: 1  Memory Usage: 404kB\n                          Buffers: shared hit=69\n                          ->  Seq Scan on clientes c  (cost=0.00..119.02 rows=5002 width=37) (actual time=0.006..3.966 rows=5002 loops=1)\n                                Buffers: shared hit=69\nPlanning:\n  Buffers: sh"
+    }
+  }
+}
