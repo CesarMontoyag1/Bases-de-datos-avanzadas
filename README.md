@@ -37,9 +37,9 @@ A continuación, se presenta el listado de proyectos desarrollados. Cada carpeta
 
 ### Ejecución del proyecto:
 * **Tener maquina EC2 en AWS**
- - tipo t2.large con 40 GB DD
- - asignarle una IP flotante para que la VM tenga siempre la misma IP pública
- - abrir los puertos 5050 y 5432 desde diferentes subredes privadas, Internet, etc
+  - tipo t2.large con 40 GB DD
+  - asignarle una IP flotante para que la VM tenga siempre la misma IP pública
+  - abrir los puertos 5050 y 5432 desde diferentes subredes privadas, Internet, etc
 * **Instalar Docker en Ubuntu 24.04**
 https://docs.docker.com/engine/install/ubuntu/
 * **Agregar usuario ubuntu como ejecutante**
