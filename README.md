@@ -22,7 +22,7 @@ A continuación, se presenta el listado de proyectos desarrollados. Cada carpeta
 
 | Proyecto | Descripción | Estado | Enlace |
 | :--- | :--- | :---: | :--- |
-| **Proyecto 1** | Optimización, Performance Tuning y manejo de Big Data (30M+ registros) en esquemas OLTP. | Completado | [Ir al Proyecto 1](./proyecto1/) |
+| **Proyecto 1** | Caso de estudio Optimización, Performance Tuning y manejo de Big Data (30M+ registros). | Completado | [Ir al Proyecto 1](./proyecto1/) |
 | **Proyecto 2** | *(Próximamente)* | Pendiente | - |
 
 
