@@ -10,7 +10,7 @@ Este espacio documenta y almacena todos los proyectos prácticos, scripts y aná
 ## Equipo de Trabajo
 
 * **Cesar Montoya Giraldo** - [CesarMontoyag1](https://github.com/CesarMontoyag1)
-* **Juan Pablo Corena** - [JP-2112]((https://github.com/JP-2112))
+* **Juan Pablo Corena** - [JP-2112](https://github.com/JP-2112)
 
 **Docente:** Edwin Montoya Múnera
 
