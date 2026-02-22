@@ -28,8 +28,8 @@ A continuación, se presenta el listado de proyectos desarrollados. Cada carpeta
 
 ---
 
-**Proyecto 1:** 
-## Tecnologías Utilizadas
+## **Proyecto 1:** 
+### Tecnologías Utilizadas:
 * **Motor de Base de Datos:** PostgreSQL
 * **Infraestructura:** AWS EC2, AWS RDS
 * **Contenedores:** Docker & Docker Compose
