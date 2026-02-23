@@ -200,5 +200,93 @@ CREATE INDEX idx_payment_status_order_id ON payment (payment_status, order_id);
 CREATE INDEX idx_orders_order_id_status_include ON orders (order_id, status);
 ANALYZE orders;
 
+-- Q7:
+-- JOIN + Agregación
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT o.status, SUM(oi.quantity * oi.unit_price) AS revenue
+FROM orders2 o
+JOIN order_item2 oi ON oi.order_id = o.order_id
+WHERE o.order_date >= DATE '2024-06-01'
+  AND o.order_date <  DATE '2024-07-01'
+GROUP BY o.status
+ORDER BY revenue DESC;
+
+-- Optimización:
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT o.status, SUM(oi.quantity * oi.unit_price) AS revenue
+FROM orders2p o
+JOIN order_item2p oi ON oi.order_id = o.order_id
+WHERE o.order_date >= DATE '2024-06-01'
+  AND o.order_date <  DATE '2024-07-01'
+  AND oi.order_date >= DATE '2024-06-01'
+  AND oi.order_date <  DATE '2024-07-01'
+GROUP BY o.status
+ORDER BY revenue DESC;
+
+-- Q8:
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT oi.product_id, SUM(oi.quantity) AS units
+FROM order_item2 oi
+WHERE oi.order_date >= DATE '2024-06-01'
+  AND oi.order_date <  DATE '2024-07-01'
+GROUP BY oi.product_id
+ORDER BY units DESC
+LIMIT 10;
+
+--Optimización:
+EXPLAIN (ANALYZE, BUFFERS)
+SELECT oi.product_id, SUM(oi.quantity) AS units
+FROM order_item2p oi
+WHERE oi.order_date >= DATE '2024-06-01'
+  AND oi.order_date <  DATE '2024-07-01'
+GROUP BY oi.product_id
+ORDER BY units DESC
+LIMIT 10;
+
+--Particionamientos:
+--orders2p:
+--Tabla:
+CREATE TABLE orders2p (
+order_id BIGINT NOT NULL,
+customer_id BIGINT,
+order_date DATE NOT NULL,
+status TEXT,
+total_amount NUMERIC(12,2),
+PRIMARY KEY (order_id, order_date)
+) PARTITION BY RANGE (order_date);
+--Particiones:
+CREATE TABLE orders2p_2024_05 PARTITION OF orders2p
+FOR VALUES FROM ('2024-05-01') TO ('2024-06-01');
+ 
+CREATE TABLE orders2p_2024_06 PARTITION OF orders2p
+FOR VALUES FROM ('2024-06-01') TO ('2024-07-01');
+ 
+CREATE TABLE orders2p_2024_07 PARTITION OF orders2p
+FOR VALUES FROM ('2024-07-01') TO ('2024-08-01');
+ 
+CREATE TABLE orders2p_default PARTITION OF orders2p DEFAULT;
+--orders_item2p:
+--Tabla:
+CREATE TABLE order_item2p (
+  order_id BIGINT,
+  product_id BIGINT,
+  quantity INT,
+  unit_price NUMERIC(10,2),
+  order_date DATE
+) PARTITION BY RANGE (order_date);
+--Particiones:
+CREATE TABLE order_item2p_2024_05 PARTITION OF order_item2p
+FOR VALUES FROM ('2024-05-01') TO ('2024-06-01');
+
+CREATE TABLE order_item2p_2024_06 PARTITION OF order_item2p
+FOR VALUES FROM ('2024-06-01') TO ('2024-07-01');
+
+CREATE TABLE order_item2p_2024_07 PARTITION OF order_item2p
+FOR VALUES FROM ('2024-07-01') TO ('2024-08-01');
+
+CREATE TABLE order_item2p_default PARTITION OF order_item2p DEFAULT;
+
+
+
 
 
