@@ -9,6 +9,7 @@ Aplicar técnicas avanzadas de optimización de consultas, particionamiento, ín
 * `/docker/`: Archivos `docker-compose.yml` y configuraciones (`postgresql.conf`) para levantar la instancia local o en EC2.
 * `/docs/`: Contiene el informe técnico final en formato PDF.
 * `README.md`: Este archivo de documentación.
+* * `/informes/`: Esta carpeta contiene el link al drive en donde estan subidos los progresos a lo largo del semestre en los informes 1 y 2.
 
 ## Arquitectura y Entorno Tecnológico
 
