@@ -1,4 +1,4 @@
--- 03_generate_big.sql
+-- 02_generate_big.sql
 -- Dataset "grande" (millones): puede tomar tiempo. Ajusta volúmenes según hardware.
 -- Si lo ejecutas en Docker local: considera aumentar shared_buffers, maintenance_work_mem, etc.
 -- Para cargas MUY grandes, es mejor usar COPY desde CSV, pero este script es 100% SQL.
