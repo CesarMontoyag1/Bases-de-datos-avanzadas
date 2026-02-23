@@ -17,3 +17,27 @@ Las pruebas y mediciones se realizaron en dos entornos distintos para comparar r
 1. **AWS EC2 (Dockerizado):** Instancia Ubuntu corriendo PostgreSQL en un contenedor Docker con parámetros de memoria ajustados manualmente.
 2. **AWS RDS:** Base de datos gestionada por Amazon Web Services, utilizando *Parameter Groups* para el *tuning*.
 
+### Tecnologías Utilizadas:
+* **Motor de Base de Datos:** PostgreSQL
+* **Infraestructura:** AWS EC2, AWS RDS
+* **Contenedores:** Docker & Docker Compose
+* **Herramientas de Análisis:** EXPLAIN ANALYZE, PgAdmin / DBeaver
+
+### Ejecución del proyecto:
+* **Tener maquina EC2 en AWS**
+  - tipo t2.large con 40 GB DD
+  - asignarle una IP flotante para que la VM tenga siempre la misma IP pública
+  - abrir los puertos 5050 y 5432 desde diferentes subredes privadas, Internet, etc
+* **Instalar Docker en Ubuntu 24.04**
+https://docs.docker.com/engine/install/ubuntu/
+* **Agregar usuario ubuntu como ejecutante**
+  - sudo usermod -a -G docker ubuntu
+* **Clonar repositorios**
+  - git clone https://github.com/si3009eafit/si3009-261.git
+  - git clone https://github.com/CesarMontoyag1/Bases-de-datos-avanzadas.git
+* **Establecer tunel entre máquina y EC"**
+  - ssh -i "file.pem" ubuntu@ip-publica -L 5050:<ip-privada-ec2>:5050
+* **Lanzar postgres y pgAdmin**
+  - cd si3009-261/pg-lab1
+  - docker compose up -d
+* **Conectarse a pgAdmin**
