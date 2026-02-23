@@ -17,11 +17,13 @@ Las pruebas y mediciones se realizaron en dos entornos distintos para comparar r
 1. **AWS EC2 (Dockerizado):** Instancia Ubuntu corriendo PostgreSQL en un contenedor Docker con parámetros de memoria ajustados manualmente.
 2. **AWS RDS:** Base de datos gestionada por Amazon Web Services, utilizando *Parameter Groups* para el *tuning*.
 
+---
 ### Tecnologías Utilizadas:
 * **Motor de Base de Datos:** PostgreSQL
 * **Infraestructura:** AWS EC2, AWS RDS
 * **Contenedores:** Docker & Docker Compose
 * **Herramientas de Análisis:** EXPLAIN ANALYZE, PgAdmin / DBeaver
+---
 
 ### Ejecución del proyecto:
 * **Tener maquina EC2 en AWS**
