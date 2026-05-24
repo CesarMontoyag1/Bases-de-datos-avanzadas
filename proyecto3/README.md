@@ -60,7 +60,7 @@ Sistema completo de Business Intelligence para RetailCO, cadena de retail colomb
 
 | Tabla | Registros |
 |---|---|
-| FactVentas | 174.814 |
+| FactVentas | 349.628 |
 | FactInventarioDiario | 718.000 |
 | FactMetasComerciales | 1.200 |
 | DimFecha | 4.018 |
