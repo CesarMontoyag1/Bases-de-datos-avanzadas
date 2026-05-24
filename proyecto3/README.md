@@ -66,3 +66,4 @@ Sistema completo de Business Intelligence para RetailCO, cadena de retail colomb
 | DimFecha | 4.018 |
 | DimCliente | 1.001 |
 | DimVendedor | 20 |
+| DimProducto | 200 |
