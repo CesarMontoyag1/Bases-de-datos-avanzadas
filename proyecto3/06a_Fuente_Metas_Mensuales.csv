@@ -1,0 +1,41 @@
+TiendaID,NombreTienda,Anio,Mes,NombreMes,CategoriaID,NombreCategoria,ValorMeta,UnidadesMeta,Canal
+1,RetailCO Bogotá Norte,2024,1,Enero,1,Electrónica,45000000,150,Tienda Física
+1,RetailCO Bogotá Norte,2024,1,Enero,2,Ropa y Moda,18000000,400,Tienda Física
+1,RetailCO Bogotá Norte,2024,1,Enero,3,Hogar y Decoración,12000000,200,Tienda Física
+1,RetailCO Bogotá Norte,2024,1,Enero,4,Alimentos,9000000,1200,Tienda Física
+1,RetailCO Bogotá Norte,2024,1,Enero,5,Deportes,15000000,180,Tienda Física
+1,RetailCO Bogotá Norte,2024,2,Febrero,1,Electrónica,48000000,160,Tienda Física
+1,RetailCO Bogotá Norte,2024,2,Febrero,2,Ropa y Moda,22000000,500,Tienda Física
+1,RetailCO Bogotá Norte,2024,3,Marzo,1,Electrónica,42000000,140,Tienda Física
+1,RetailCO Bogotá Norte,2024,3,Marzo,6,Belleza y Cuidado,10000000,300,Tienda Física
+1,RetailCO Bogotá Norte,2024,4,Abril,1,Electrónica,50000000,170,E-Commerce
+1,RetailCO Bogotá Norte,2024,5,Mayo,2,Ropa y Moda,25000000,600,Tienda Física
+1,RetailCO Bogotá Norte,2024,6,Junio,1,Electrónica,55000000,190,E-Commerce
+2,RetailCO Bogotá Sur,2024,1,Enero,1,Electrónica,38000000,125,Tienda Física
+2,RetailCO Bogotá Sur,2024,1,Enero,2,Ropa y Moda,15000000,350,Tienda Física
+2,RetailCO Bogotá Sur,2024,2,Febrero,1,Electrónica,40000000,135,Tienda Física
+2,RetailCO Bogotá Sur,2024,3,Marzo,4,Alimentos,8000000,1000,Tienda Física
+2,RetailCO Bogotá Sur,2024,4,Abril,2,Ropa y Moda,18000000,420,Tienda Física
+3,RetailCO Medellín Centro,2024,1,Enero,1,Electrónica,52000000,175,Tienda Física
+3,RetailCO Medellín Centro,2024,1,Enero,2,Ropa y Moda,20000000,450,Tienda Física
+3,RetailCO Medellín Centro,2024,2,Febrero,5,Deportes,18000000,200,Tienda Física
+3,RetailCO Medellín Centro,2024,3,Marzo,1,Electrónica,55000000,185,App Móvil
+4,RetailCO Medellín Laureles,2024,1,Enero,6,Belleza y Cuidado,12000000,350,Tienda Física
+4,RetailCO Medellín Laureles,2024,2,Febrero,2,Ropa y Moda,28000000,650,Tienda Física
+4,RetailCO Medellín Laureles,2024,3,Marzo,7,Juguetería,15000000,300,Tienda Física
+5,RetailCO Cali Norte,2024,1,Enero,1,Electrónica,35000000,115,Tienda Física
+5,RetailCO Cali Norte,2024,1,Enero,3,Hogar y Decoración,10000000,180,Tienda Física
+5,RetailCO Cali Norte,2024,2,Febrero,4,Alimentos,7500000,950,Tienda Física
+6,RetailCO Barranquilla,2024,1,Enero,1,Electrónica,30000000,100,Tienda Física
+6,RetailCO Barranquilla,2024,1,Enero,4,Alimentos,11000000,1400,Tienda Física
+6,RetailCO Barranquilla,2024,2,Febrero,2,Ropa y Moda,14000000,320,Tienda Física
+7,RetailCO Cartagena,2024,1,Enero,1,Electrónica,28000000,95,Tienda Física
+7,RetailCO Cartagena,2024,1,Enero,6,Belleza y Cuidado,9000000,270,Tienda Física
+7,RetailCO Cartagena,2024,2,Febrero,4,Alimentos,8000000,1000,Tienda Física
+8,RetailCO Bucaramanga,2024,1,Enero,1,Electrónica,32000000,108,Tienda Física
+8,RetailCO Bucaramanga,2024,2,Febrero,5,Deportes,14000000,160,Tienda Física
+9,RetailCO Pereira,2024,1,Enero,2,Ropa y Moda,13000000,300,Tienda Física
+9,RetailCO Pereira,2024,2,Febrero,1,Electrónica,29000000,97,Tienda Física
+10,RetailCO Santa Marta,2024,1,Enero,4,Alimentos,7000000,880,Tienda Física
+10,RetailCO Santa Marta,2024,2,Febrero,1,Electrónica,26000000,88,Tienda Física
+10,RetailCO Santa Marta,2024,3,Marzo,6,Belleza y Cuidado,8000000,240,Tienda Física
