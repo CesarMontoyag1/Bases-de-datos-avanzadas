@@ -101,7 +101,7 @@ Autenticación:     SQL Server Authentication
 
 | Fact | Granularidad | Registros |
 |---|---|---|
-| `FactVentas` | Línea de detalle de venta | 174.814 |
+| `FactVentas` | Línea de detalle de venta | 349.628 |
 | `FactInventarioDiario` | Producto × Tienda × Día | 718.000 |
 | `FactMetasComerciales` | Tienda × Mes | 1.200 |
 | `FactDevoluciones` | Devolución individual | ~2.000 |
