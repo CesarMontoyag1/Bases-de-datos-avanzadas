@@ -89,7 +89,7 @@ Se construyó una arquitectura de tres capas sobre una VM en Azure: base OLTP no
 | :--- | :--- |
 | [Dashboard Power BI](https://app.powerbi.com/view?r=eyJrIjoiZGZjMmRjZTUtNjk0OS00ZDdkLThiNjEtNGIyNTQ3MDA2M2ViIiwidCI6Ijk5ZjdiNTVlLTljYmUtNDY3Yi04MTQzLTkxOTc4MjkxOGFmYiIsImMiOjR9) | 6 páginas · 37 medidas DAX |
 | [Video de sustentación](https://youtu.be/JJIgKqyDjDE) | Demostración completa del sistema |
-| FactVentas | 174.814 filas cargadas vía ETL |
+| FactVentas | 349.628 | filas cargadas vía ETL |
 | FactInventarioDiario | 718.000 filas (365 días × 200 prod × 10 tiendas) |
 | FactMetasComerciales | 1.200 filas — 12 meses × 10 tiendas |
 | Staging extraído | 895.651 registros procesados |
