@@ -25,7 +25,7 @@ A continuación, se presenta el listado de proyectos desarrollados. Cada carpeta
 | :--- | :--- | :---: | :--- |
 | **Proyecto 1** | Caso de estudio: Optimización, Performance Tuning y manejo de Big Data (30M+ registros). | ✅ Completado | [Ir al Proyecto 1](./proyecto1/) |
 | **Proyecto 2** | Arquitecturas Distribuidas: Escalabilidad, Replicación, Consistencia y Transacciones Distribuidas sobre dominio bancario. Comparativa PostgreSQL 16 vs CockroachDB v23.2. | ✅ Completado | [Ir al Proyecto 2](./proyecto2/) |
-| **Proyecto 3** | Pendiente |
+| **Proyecto 3** | Sistema de Business Intelligence completo: OLTP normalizado, pipeline ETL en T-SQL, Data Warehouse dimensional (estrella) y dashboard Power BI desplegados en Azure. | ✅ Completado | [Ir al Proyecto 3](./proyecto3/) |
 
 ---
 
@@ -57,6 +57,43 @@ Se diseñó e implementó una plataforma de banca digital con transferencias ent
 | Escrituras con sync_commit=off | **0.86 ms** | N/A |
 | Escrituras con sync_commit=local | **2.22 ms** | N/A |
 
+---
+
+## Proyecto 3 — Resumen ejecutivo
+ 
+El Proyecto 3 implementa un sistema completo de Business Intelligence para **RetailCO**, una cadena de retail colombiana ficticia con 10 tiendas a nivel nacional: **¿cómo transformar datos transaccionales dispersos en información estratégica accionable para la gerencia?**
+ 
+Se construyó una arquitectura de tres capas sobre una VM en Azure: base OLTP normalizada en 3FN, un pipeline ETL en T-SQL con validación de calidad, y un Data Warehouse en esquema estrella. El resultado es un dashboard interactivo en Power BI con 6 páginas y 37 medidas DAX publicado en la nube.
+ 
+### Tecnologías utilizadas
+ 
+| Componente | Tecnología |
+| :--- | :--- |
+| Motor de base de datos | SQL Server 2022 Developer Edition |
+| Infraestructura | Azure VM Standard_D2als_v7 (West US 2) |
+| ETL | T-SQL Stored Procedures (13 procedimientos) |
+| Visualización | Power BI Desktop + Power BI Service |
+ 
+### Acceso al servidor
+ 
+| Parámetro | Valor |
+| :--- | :--- |
+| Servidor (SSMS) | `20.83.224.24,1433` |
+| Usuario | `proyectoprof` |
+| Contraseña | `ProyectoBIProf2026!` |
+| Autenticación | SQL Server Authentication |
+ 
+### Resultados clave obtenidos
+ 
+| Entregable | Detalle |
+| :--- | :--- |
+| [Dashboard Power BI](https://app.powerbi.com/view?r=eyJrIjoiZGZjMmRjZTUtNjk0OS00ZDdkLThiNjEtNGIyNTQ3MDA2M2ViIiwidCI6Ijk5ZjdiNTVlLTljYmUtNDY3Yi04MTQzLTkxOTc4MjkxOGFmYiIsImMiOjR9) | 6 páginas · 37 medidas DAX |
+| [Video de sustentación](https://youtu.be/JJIgKqyDjDE) | Demostración completa del sistema |
+| FactVentas | 174.814 filas cargadas vía ETL |
+| FactInventarioDiario | 718.000 filas (365 días × 200 prod × 10 tiendas) |
+| FactMetasComerciales | 1.200 filas — 12 meses × 10 tiendas |
+| Staging extraído | 895.651 registros procesados |
+ 
 ---
 
 > **Nota:** Este repositorio está diseñado bajo prácticas de DevOps para facilitar la lectura y replicación de los laboratorios por parte del equipo docente y otros desarrolladores.
